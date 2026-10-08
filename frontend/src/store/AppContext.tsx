@@ -2,6 +2,7 @@ import {
   aiSuggestedTaskTemplates,
   motivationalQuotes,
 } from '@/data/mockData';
+import { supabase } from '@/lib/supabase';
 import type {
   CalendarEvent,
   ChatMessage,
@@ -17,9 +18,8 @@ import type {
   TaskStatus,
   View,
 } from '@/types';
-import { createContext, useContext, useState, useMemo, type ReactNode } from 'react';
 import type { User } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 
 interface AppContextValue {
   user: User | null;
@@ -173,7 +173,7 @@ export function AppProvider({ children, user }: { children: ReactNode; user: Use
     setChatMessages((prev) => [...prev, userMsg, initialBotMsg]);
 
     try {
-      const response = await fetch('https://onlinepersonlisedtutor-production.up.railway.app/api/chat', {
+      const response = await fetch('https://onlinepersonlisedtutor-production.up.railway.app/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -206,10 +206,10 @@ export function AppProvider({ children, user }: { children: ReactNode; user: Use
         prev.map((msg) =>
           msg.id === botMsgId
             ? {
-                ...msg,
-                content:
-                  '⚠️ Could not reach the tutor backend. Ensure FastAPI is running on http://localhost:8000.',
-              }
+              ...msg,
+              content:
+                '⚠️ Could not reach the tutor backend. Ensure FastAPI is running on http://localhost:8000.',
+            }
             : msg
         )
       );
