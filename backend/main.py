@@ -32,8 +32,12 @@ class ChatRequest(BaseModel):
     user_id: str
     message: str
 
+@app.get("/")
+def read_root():
+    return {"status": "online"}
 
 @app.post("/api/chat")
+@app.post("/")
 async def chat_with_tutor(req: ChatRequest):
     try:
         profile = {}
