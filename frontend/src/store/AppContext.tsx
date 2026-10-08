@@ -173,7 +173,7 @@ export function AppProvider({ children, user }: { children: ReactNode; user: Use
     setChatMessages((prev) => [...prev, userMsg, initialBotMsg]);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch('https://onlinepersonlisedtutor-production.up.railway.app/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
